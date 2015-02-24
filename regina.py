@@ -37,17 +37,18 @@ def main(genre, window, limit, sleep):
 
     urls = soup.findAll('a', href=re.compile('http.*\.mp3'))
 
+    dir_path = os.path.join('/tmp', genre, window)
+
+    try:
+        os.makedirs(dir_path)
+    except OSError:
+            pass # already exists
+
     for url in [x['href'] for x in urls]:
         filename = url.rsplit('/', 1)[1]
 
-        dir_path = os.path.join('/tmp', genre, window)
         file_path = os.path.join(dir_path, filename)
         click.echo('Downloading {0} to {1}'.format(url, file_path))
-
-        try:
-            os.makedirs(dir_path)
-        except OSError:
-                pass # already exists
 
         mp3 = requests.get(url, stream=True)
 
