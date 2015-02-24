@@ -46,10 +46,11 @@ def main(genre, window, sleep):
         except OSError:
                 pass # already exists
 
-        mp3 = requests.get(url)
+        mp3 = requests.get(url, stream=True)
 
-        with open(file_path, 'wb') as f:
-            f.write(mp3.content)
+        with open(file_path, 'wb') as fd:
+            for chunk in mp3.iter_content(1024):
+                fd.write(chunk)
 
         time.sleep(sleep)
 
