@@ -28,7 +28,8 @@ limits = ['10', '20', '50', '100', '500']
 @click.option('--window', type=click.Choice(windows), help='How far back you feel like lookin?')
 @click.option('--limit', type=click.Choice(limits), help='How many releases you finna download?')
 @click.option('--sleep', default=3, help='Be Nice :D')
-def main(genre, window, limit, sleep):
+@click.option('--directory', default='/tmp', help='Where do you wanna put these files?')
+def main(genre, window, limit, sleep, directory):
     """
     Browse new releases from http://www.juno.co.uk/ without leaving the prompt.
     """
@@ -37,7 +38,7 @@ def main(genre, window, limit, sleep):
 
     urls = soup.findAll('a', href=re.compile('http.*\.mp3'))
 
-    dir_path = os.path.join('/tmp', genre, window)
+    dir_path = os.path.join(directory, genre, window)
 
     try:
         os.makedirs(dir_path)
