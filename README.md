@@ -1,7 +1,7 @@
-vagabond
+regina
 ===========
 
-Download new releases from http://www.juno.co.uk/ without leaving the prompt.
+Fetch new releases from http://www.juno.co.uk/.
 
 ---
 
@@ -13,10 +13,16 @@ $ python setup.py install
 
 ## Usage
 
+The script performs three functions:
+
+- Generates a CSV of release information
+- Downloads images of new releases
+- Downloads audio samples of new releases
+
 ```bash
-$ regina --genre deep-house --window today --sleep 5
-Downloading http://www.juno.co.uk/MP3/SF547867-01-02-02.mp3 to /tmp/minimal-tech-house/today/SF547867-01-02-02.mp3
-...
+$ regina deep-house today 10
+$ regina minimal-tech-house eight-weeks 500
+$ regina house this-week 50
 ```
 
 Check out the help for all available arguments:
