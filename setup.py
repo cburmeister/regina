@@ -8,7 +8,7 @@ setup(
     license='MIT',
     author='Corey Burmeister',
     author_email='burmeister.corey@gmail.com',
-    oescription='Download new releases from http://www.juno.co.uk/ without leaving the prompt.',
+    oescription='Fetch new releases from http://www.juno.co.uk/.',
     py_modules=['regina'],
     platforms='any',
     install_requires=[

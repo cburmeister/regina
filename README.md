@@ -1,3 +1,5 @@
+![Juno](https://raw.githubusercontent.com/cburmeister/regina/master/image.jpg)
+
 regina
 ===========
 
@@ -29,4 +31,15 @@ Check out the help for all available arguments:
 
 ```bash
 $ regina --help
+```
+
+## Examples
+
+Run this weekly with `cron` to browse new releases via iTunes:
+
+```bash
+python regina.py deep-house this-week 500 && \
+    mv deep-house/*.mp3 \
+    ~/Music/iTunes/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized/ && \
+    rm -rf deep-house
 ```
