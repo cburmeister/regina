@@ -33,27 +33,33 @@ def main(genre, window, limit, sleep):
     url = '{}/{}/{}/?items_per_page={}'.format(base_url, genre, window, limit)
 
     r = requests.get(url)
-    soup = BeautifulSoup(r.content, 'lxml')
+    soup = BeautifulSoup(r.content)
     table = soup.find(class_='product_list')
     products = table.find_all(attrs={'ua_location': re.compile('product')})
 
-    if not os.path.exists(genre):
+    if not products:
+        return
+
+    try:
         os.makedirs(genre)
+    except OSError:
+        pass  # already exists
 
     with open('{}/{}.csv'.format(genre, genre), 'wb') as out_file:
-        csv_writer = csv.writer(out_file)
-        csv_writer.writerow([
-            'artist', 'title', 'label', 'catno', 'format', 'genre', 'style',
-            'tracks', 'images', 'audio',
-        ])
         for idx, (row1, row2, row3) in enumerate(grouper(3, products)):
+            if idx == 0:
+                csv_writer = csv.writer(out_file)
+                csv_writer.writerow([
+                    'artist', 'title', 'label', 'catno', 'format', 'genre',
+                    'style', 'tracks', 'images', 'audio',
+                ])
             try:
                 url = row1\
                     .find(class_='producttitle')\
                     .find('a', class_='jhighlight')['href']
 
                 r = requests.get(base_url + url)
-                soup = BeautifulSoup(r.content, 'lxml')
+                soup = BeautifulSoup(r.content)
 
                 image_keys = []
                 images = soup.find('div', class_='product-images-large')
